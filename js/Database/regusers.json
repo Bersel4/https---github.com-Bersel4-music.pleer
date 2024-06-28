@@ -1,0 +1,20 @@
+
+{
+    "regusers": [
+      {
+        "id": 1,
+        "username": "test",
+        "password": "test",
+        "name": "test",
+        "email": "test@test.ru"
+      },
+      {
+        "id": 2,
+        "username": "alice_smith",
+        "password": "password456",
+        "name": "Alice Smith",
+        "email": "test@example.com"
+      }
+    ]
+  }
+  

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <ul class="header__list">
+        <li><a href="#">Город</a></li>
+        <li><a href="https://yandex.ru/pogoda/kaluga?lat=54.513678&lon=36.261341">Погода</a></li>
+        <li><a href="#!">Время</a></li>
+        <h1><a href="index1.html">FocusWM</a></h1>
+        <li><a href="Albomy.html">Альбомы</a></li>
+        <li><a href="index1.html">JohnDoe</a></li>
+      </ul>
+      <div id="userInfo">
+        <div class="container">
+          <div class="user-container">
+            <h2>Личный кабинет</h2>
+            <form id="editForm">
+              <label for="editName">Name:</label>
+              <input type="text" id="editName" name="editName"><br><br>
+              <label for="editEmail">Email:</label>
+              <input type="text" id="editEmail" name="editEmail"><br><br>
+              <label for="editAge">Age:</label>
+              <input type="number" id="editAge" name="editAge"><br><br>
+              <label for="profilePic">Profile Picture:</label>
+              <input type="file" id="profilePic" name="profilePic"><br><br>
+              <img id="profileImage" src="" alt="Profile Picture" width="200"><br><br>
+              <input type="submit" value="Save">
+            </form>
+          </div>
+        </div>
+        
+      </div>
+      </div>
+
+      
+  
+
+  <script>
+    function getUrlParameter(name) {
+      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+      const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      const results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    const emailParam = getUrlParameter('email');
+
+    fetch('/js/Database/regusers.json')
+      .then(response => response.json())
+      .then(data => {
+        const users = data.regusers;
+        const currentUser = users.find(user => user.email === emailParam);
+
+        if (currentUser) {
+
+          document.getElementById('editName').value = currentUser.name;
+          document.getElementById('editEmail').value = currentUser.email;
+          document.getElementById('editAge').value = currentUser.age;
+
+          document.getElementById('profilePic').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                document.getElementById('profilePic').setAttribute('src', e.target.result);
+              };
+              reader.readAsDataURL(file);
+            }
+          });
+
+        } else {
+          //document.getElementById('ProfileImage').innerText = 'Пользователь не найден';
+          return;
+        }
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const editedName = document.getElementById('editName').value;
+            const editedEmail = document.getElementById('editEmail').value;
+            const editedAge = document.getElementById('editAge').value;
+
+            currentUser.name = editedName;
+            currentUser.email = editedEmail;
+            currentUser.age = editedAge;
+
+            console.log('Updated User:', currentUser);
+            // Здесь вы можете отправить обновленные данные на сервер или сохранить их в базу данных
+
+            const profileImageSrc = document.getElementById('profilePic').getAttribute('src');
+            console.log('Profile Image:', profileImageSrc);
+            document.getElementById("profileImage").setAttribute('src', profileImageSrc);
+            // Здесь вы можете отправить выбранное изображение на сервер для сохранения в базе данных
+          });
+      })
+      .catch(error => console.log(error));
+  </script>
+</div>
+  <!-- Здесь разместите информацию о личном кабинете пользователя -->
+</body>
+</html>

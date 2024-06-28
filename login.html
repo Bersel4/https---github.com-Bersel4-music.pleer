@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Авторизация</title>
+	<link rel="stylesheet" type="text/css" href="css/form.css">
+	<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"
+		type="text/css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+	<div class="main">
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+		<div class="signup">
+			<form id="regForm">
+				<label for="chk" aria-hidden="true">Sign up</label>
+				<input type="text" id="RegFormName" name="txt" placeholder="User name" required="">
+				<input type="email" id="RegFormMail" name="email" placeholder="Email" required="">
+				<input type="password" id="RegFormPassword" name="pswd" placeholder="Password" required="">
+				<button>Sign up</button>
+			</form>
+		</div>
+
+		<div class="login">
+			<form id="loginForm">
+				<label for="chk" aria-hidden="true">Login</label>
+				<input type="email" id="loginFormEmail" name="email" placeholder="Email" required="">
+				<input type="password" id="loginFormPassword" name="pswd" placeholder="Password" required="">
+				<button>Login</button>
+			</form>
+		</div>
+	</div>
+<script>
+	    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Получаем значения из формы
+      const email = document.getElementById('loginFormEmail').value;
+      const password = document.getElementById('loginFormPassword').value;
+
+      // Загрузка данных пользователей из JSON
+      fetch('/js/Database/regusers.json')
+        .then(response => response.json())
+        .then(data => {
+          const users = data.regusers;
+          
+          // Поиск пользователя по имени пользователя (email)
+          const foundUser = users.find(user => user.email === email);
+
+          if (foundUser) {
+            // Проверка введенного пароля
+            if (foundUser.password === password) {
+              // Перенаправление на страницу личного кабинета при успешной авторизации
+              window.location.href = 'dashboard.html' + '?email='+email;
+            } else {
+              document.getElementById('error').innerText = 'Неправильный пароль';
+            }
+          } else {
+            document.getElementById('error').innerText = 'Пользователь не найден';
+          }
+        })
+        .catch(error => console.log(error));
+    });
+
+    // регистрация
+	document.getElementById('regForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Получаем значения из формы
+      const email = document.getElementById('RegFormMail').value;
+      const password = document.getElementById('RegFormPassword').value;
+	    const name = document.getElementById('RegFormName').value;
+
+      // Загрузка данных пользователей из JSON
+      fetch('/js/Database/regusers.json')
+        .then(response => response.json())
+        .then(data => {
+          const users = data.regusers;
+          
+          // Поиск пользователя по имени пользователя (email)
+		      const foundUser = users.find(user => user.email === email);
+		      const foundUserName = users.find(user => user.username === name);
+
+          if (foundUser) {
+            document.getElementById('error').innerText = 'Такой email уже зарегистрирован!';
+            return;
+          }
+          if (foundUserName){
+            document.getElementById('error').innerText = 'Такое имя уже занято!';
+            return;
+          }
+          var arraydata_reg = users;
+          arraydata_reg.push({
+            usernaame: name,
+            email: email,
+            password: password
+          });
+          window.location.href = 'dashboard.html';
+
+
+        }
+        )
+        .catch(error => console.log(error));
+    });
+	
+
+
+</script>
+</body>
+
+</body>
+
+</html>

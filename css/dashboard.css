@@ -1,0 +1,22 @@
+#editForm {
+    margin: 48px 18px 0px 0px;
+}
+
+h2 {
+    margin: 0px 0px 0px 23px;
+}
+
+#userInfo {
+    margin: 154px 0px 0px 0px;
+    width: 600px;
+}
+
+label input {
+    margin: 100px 0px 0px 0px;
+}
+
+
+.user-container {
+    border: 1px solid red;
+    border-radius: 10px;
+}

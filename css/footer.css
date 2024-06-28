@@ -1,0 +1,18 @@
+.footer {
+    margin: 0 auto;
+    
+}
+
+.footer__container {
+    height: 208px;
+    flex-shrink: 0;
+    margin-top: 102px;
+    border: 2px solid black;
+    flex-shrink: 0;
+    padding: 66px 0px 0px 0px;
+    background: #C68DF3;
+    position: fixed;
+    width: 100%;
+    left: 0; 
+    bottom: 0;
+}

@@ -1,0 +1,23 @@
+body, *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #E6D3FF;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1280px;
+    color: #000;
+    text-align: center;
+    font-family: Ubuntu;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 2.4px;
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .container
+}
